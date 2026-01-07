@@ -33,53 +33,54 @@ const offers = [
 export default function BrochureScreen() {
   const navigation = useNavigation();
 
-const renderItem = ({ item }) => (
-  <View style={{ marginBottom: 24 }}>
-    {/* Card */}
-    <View style={styles.card}>
-      {/* Top Row: Offer tag and Discount tag */}
-      <View style={styles.topRow}>
-        {item.type && (
-          <View style={styles.offerTag}>
-            <Text style={styles.offerTagText}>{item.type}</Text>
-          </View>
-        )}
-        {item.discount && (
-          <View style={styles.discountTag}>
-            <Text style={styles.discountText}>{item.discount}</Text>
-          </View>
-        )}
-      </View>
+  const renderItem = ({ item }) => (
+    <View style={{ marginBottom: 24 }}>
+      {/* Card */}
+      <View style={styles.card}>
+        
+        {/* Top Row: Offer tag and Discount tag */}
+        <View style={styles.topRow}>
+          {item.type && (
+            <View style={styles.offerTag}>
+              <Text style={styles.offerTagText}>{item.type}</Text>
+            </View>
+          )}
+          {item.discount && (
+            <View style={styles.discountTag}>
+              <Text style={styles.discountText}>{item.discount}</Text>
+            </View>
+          )}
+        </View>
 
-      {/* Name + location on left, date on right */}
-      <View style={styles.nameDateRow}>
-        {/* Left: name + location */}
-        <View>
-          <Text style={styles.businessName}>{item.name}</Text>
+        {/* Name + location on left, date on right */}
+        <View style={styles.nameDateRow}>
+          {/* Left: name + location */}
+          <View>
+            <Text style={styles.businessName}>{item.name}</Text>
+            <View style={styles.iconTextRow}>
+              <Image
+                source={require('../../assets/location.png')}
+                style={styles.iconSmall}
+              />
+              <Text style={styles.location}>{item.location}</Text>
+            </View>
+          </View>
+
+          {/* Right: date with calendar icon */}
           <View style={styles.iconTextRow}>
             <Image
-              source={require('../../assets/location.png')}
+              source={require('../../assets/calendar.png')}
               style={styles.iconSmall}
             />
-            <Text style={styles.location}>{item.location}</Text>
+            <Text style={styles.date}>{item.date}</Text>
           </View>
         </View>
-
-        {/* Right: date with calendar icon */}
-        <View style={styles.iconTextRow}>
-          <Image
-            source={require('../../assets/calendar.png')}
-            style={styles.iconSmall}
-          />
-          <Text style={styles.date}>{item.date}</Text>
-        </View>
       </View>
-    </View>
 
-    {/* Distance outside the card */}
-    <Text style={styles.distanceOutside}>{item.distance}</Text>
-  </View>
-);
+      {/* Distance outside the card */}
+      <Text style={styles.distanceOutside}>{item.distance}</Text>
+    </View>
+  );
 
 
 
@@ -105,13 +106,16 @@ const renderItem = ({ item }) => (
       </View>
 
       {/* Offers list */}
-      <FlatList
-        data={offers}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        contentContainerStyle={{ paddingBottom: 100 }}
-        showsVerticalScrollIndicator={false}
-      />
+      {/* Offers Section */}
+      <View style={styles.sectionWrapper}>
+        <FlatList
+          data={offers}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+
     </View>
   );
 }
@@ -119,24 +123,31 @@ const renderItem = ({ item }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#f5f5f5',
     paddingHorizontal: 16,
     paddingTop: 40,
   },
- iconTextRow: {
-  flexDirection: 'row',
-  alignItems: 'center', // ensures icon and text are vertically centered
-  marginTop: 2,
+  iconTextRow: {
+    flexDirection: 'row',
+    alignItems: 'center', // ensures icon and text are vertically centered
+    marginTop: 2,
+  },
+  sectionWrapper: {
+  backgroundColor: '#ffffff',
+  borderRadius: 20,
+  padding: 12,
+  marginTop: 10,
 },
 
-iconSmall: {
-  width: 18,
-  height: 18,
-  marginRight: 6, 
-  resizeMode: 'contain',
-  marginTop: -6
 
-},
+  iconSmall: {
+    width: 18,
+    height: 18,
+    marginRight: 6,
+    resizeMode: 'contain',
+    marginTop: -6
+
+  },
 
 
 
@@ -196,16 +207,18 @@ iconSmall: {
 
   // Card styles
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    elevation: 2,
-  },
+  backgroundColor: '#f0f0f0',
+  borderRadius: 16,
+  padding: 16,
+  marginBottom: 12,
+  shadowColor: '#000',
+  shadowOpacity: 0.05,
+  shadowOffset: { width: 0, height: 2 },
+  shadowRadius: 5,
+  elevation: 2,
+  minHeight: 300,   // ⬅️ try 120–150
+},
+
 
   topRow: {
     flexDirection: 'row',
@@ -265,16 +278,16 @@ iconSmall: {
     color: '#777',
   },
   nameDateRow: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginTop: 8,
-},
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 8,
+  },
 
-distanceOutside: {
-  fontSize: 12,
-  color: '#777',
-  marginLeft: 8,  // align with card padding
-},
+  distanceOutside: {
+    fontSize: 12,
+    color: '#777',
+    marginLeft: 8,  // align with card padding
+  },
 
 });
